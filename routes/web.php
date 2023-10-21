@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\LoginController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Socialite login.
+Route::get('social-redirect/{social_type}', [LoginController::class, 'socialiteRedirect'])->whereIn('social_type', ['github','google','facebook', 'twitter']);
+
+Route::get('social-back/{social_type}', [LoginController::class, 'socialiteLogin'])->whereIn('social_type', ['github','google','facebook', 'twitter']);
